@@ -1,0 +1,47 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-danger text-white">{{ __('Tela Bloqueada') }}</div>
+
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-lock fa-5x text-danger"></i>
+                    </div>
+                    
+                    <h4 class="mb-3">Sessão Inativa</h4>
+                    <p class="mb-4">Por segurança, sua sessão foi bloqueada. Digite sua senha para continuar.</p>
+                    
+                    <form method="POST" action="{{ route('unlock') }}">
+                        @csrf
+                        
+                        <div class="form-group mb-3">
+                            <input 
+                                id="password" 
+                                type="password" 
+                                class="form-control form-control-lg @error('password') is-invalid @enderror" 
+                                name="password" 
+                                required 
+                                autofocus
+                                placeholder="Sua senha"
+                            >
+                            @error('password')
+                                <div class="invalid-feedback text-start">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">
+                            <i class="fas fa-unlock-alt me-2"></i> {{ __('Desbloquear') }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
