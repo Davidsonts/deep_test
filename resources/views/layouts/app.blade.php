@@ -32,5 +32,37 @@
                 {{ $slot }}
             </main>
         </div>
+
+        <script> /// implementar o bloqueio automático de tela após um período de inatividade.
+                /// em Angular pode ser utilizado um Intercept
+            document.addEventListener('DOMContentLoaded', function() {
+                // Não monitorar inatividade na tela de bloqueioo um icomponent 
+                if (window.location.pathname === '/lock-screen') return;
+
+                let idleTimer;
+                const inactivityTime = {{ env('SESSION_LIFETIME', 15) * 60 * 1000 }};
+
+                function resetTimer() {
+                    clearTimeout(idleTimer);
+                    idleTimer = setTimeout(lockScreen, inactivityTime);
+                }
+
+                function lockScreen() {
+                    fetch("{{ route('lock-screen') }}")
+                        .then(response => {
+                            if (response.ok && window.location.pathname !== '/lock-screen') {
+                                window.location.href = "{{ route('lock-screen') }}";
+                            }
+                        });
+                }
+
+                // Eventos que resetam o timer
+                ['mousemove', 'keydown', 'scroll', 'click', 'touchstart'].forEach(event => {
+                    window.addEventListener(event, resetTimer);
+                });
+
+                resetTimer(); // Iniciar o timer
+            });
+        </script>
     </body>
 </html>
