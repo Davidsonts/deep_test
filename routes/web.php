@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\LockScreenController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckInactivity;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     // Rotas para a tela de bloqueio
-    Route::get('/lock-screen', [LockScreenController::class, 'show'])->name('lock-screen');
-    Route::post('/unlock', [LockScreenController::class, 'unlock'])->name('unlock'); 
+    Route::get('/lock-screen', [LockScreenController::class, 'show'])->name('lock-screen')->withoutMiddleware([CheckInactivity::class]); 
+    Route::post('/unlock', [LockScreenController::class, 'unlock'])->name('unlock')->withoutMiddleware([CheckInactivity::class]);
 });
 
 require __DIR__.'/auth.php';
