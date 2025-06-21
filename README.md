@@ -62,3 +62,9 @@ Sistema simples de autenticação de usuários desenvolvido com Laravel 10, PHP 
 8. Inicie o servidor:
     ```bash 
     php artisan serve  
+
+## Links Úteis
+
+Veja os ambientes disponíveis:
+
+- **Desenvolvimento:** [Clique aqui](http://DEEP-249698963.us-east-1.elb.amazonaws.com)
