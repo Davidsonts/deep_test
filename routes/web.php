@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
     // Rotas para a tela de bloqueio
     Route::get('/lock-screen', [LockScreenController::class, 'show'])->name('lock-screen')->withoutMiddleware([CheckInactivity::class]); 
     Route::post('/unlock', [LockScreenController::class, 'unlock'])->name('unlock')->withoutMiddleware([CheckInactivity::class]);
+
+    Route::patch('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.update-avatar');
 });
 
 require __DIR__.'/auth.php';
